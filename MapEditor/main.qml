@@ -9,6 +9,8 @@ import "qrc:///App"
 
 import "qrc:///App/App.js" as App
 
+// Designed by Igor
+
 Window {
 	id: root
 	visible: true
