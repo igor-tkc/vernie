@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Scene/Scene.qml</file>
+        <file>Scene/Layer.qml</file>
+        <file>Scene/Box.qml</file>
+        <file>Tools/SelectTool.qml</file>
+        <file>Tools/NavigationTool.qml</file>
+        <file>Libraries/ImageLibrary.qml</file>
+        <file>App/App.js</file>
+        <file>App/QmlApp.qml</file>
+    </qresource>
+</RCC>
