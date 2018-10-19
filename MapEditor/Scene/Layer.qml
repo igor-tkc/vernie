@@ -72,17 +72,16 @@ Item {
 		return d.items[i][j]
 	}
 
-	function removeItem(item) {
-		var l = d.indexOf(item)
-		if(l) {
-			d.items[l.i][l.j] = null
-			item.destroy()
+	function removeItem(i, j) {
+		if(d.items[i][j]) {
+			d.items[i][j].destroy()
+			d.items[i][j] = null
 		}
 	}
 
 	function addItem(i, j, data) {
 		if(d.items[i][j] !== null) {
-			removeItem(d.items[i][j])
+			removeItem(i, j)
 		}
 
 		var result = createItem(i, j, data)

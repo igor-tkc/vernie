@@ -32,14 +32,23 @@ Item {
 		}
 	}
 
-	function removeItem(layer, item) {
+	function removeItem(layer, i, j) {
 		if(layer)
-			layer.removeItem(item)
+			layer.removeItem(i, j)
 	}
 
 	function addItem(layer, i, j, data) {
 		if(layer)
 			layer.addItem(i, j, data)
+	}
+
+	function nextLayer(layer) {
+		for(var i = 0; i < root.children.length - 1; ++i) {
+			if(root.children[i] === layer) {
+				return root.children[i + 1]
+			}
+		}
+		return null
 	}
 
 	function layerAt(name) {

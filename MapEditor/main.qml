@@ -30,6 +30,17 @@ Window {
 		id: mapProvider
 
 		property var map
+		function findLayers(map) {
+			var result = []
+			if(map !== null) {
+				for(var i = 0; i < map.length; ++i) {
+					result.push(map[i].name)
+				}
+			}
+			return result
+		}
+
+		property var layers: map && findLayers(map) || []
 
 		function generateMap(width, height) {
 			console.time("Server::generateMap")
@@ -140,12 +151,8 @@ Window {
 			}
 
 			ComboBox {
-				id: currentLayerComboBox
-				textRole: "key"
-				model: ListModel {
-					ListElement { key: "Layer0"; value: 0; }
-					ListElement { key: "Layer1"; value: 1 }
-				}
+				id: layerComboBox
+				model:mapProvider.layers
 			}
 		}
 
@@ -184,22 +191,18 @@ Window {
 						acceptedButtons: Qt.LeftButton | Qt.RightButton
 
 						onPressed: {
-							var result = scene.hitTest(mouseX, mouseY)
 							var ijObj = scene.xyToIj(mouseX, mouseY)
-							if(result.item) {
-								viewport.selectedItem = result.item
-								viewport.selectedLayer = result.layer
-
-								if(mouse.button == Qt.RightButton) {
-									scene.removeItem(viewport.selectedLayer, viewport.selectedItem)
-									viewport.selectedLayer = null
-									viewport.selectedItem = null
-								} else {
-//									viewport.selectedItem.type = boxTypeComboBox.boxType
-									scene.addItem(scene.layerAt("Layer1"), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
-								}
+							if(mouse.button == Qt.RightButton) {
+								scene.removeItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j)
+								viewport.selectedLayer = null
+								viewport.selectedItem = null
 							} else {
-								scene.addItem(scene.layerAt("Layer0"), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
+//								var result = scene.hitTest(mouseX, mouseY)
+//								if(result.item) {
+//									viewport.selectedItem = result.item
+//									viewport.selectedLayer = result.layer
+//								}
+								scene.addItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
 							}
 						}
 //						onPositionChanged: {
