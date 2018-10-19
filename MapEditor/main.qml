@@ -157,7 +157,7 @@ Window {
 					Layout.alignment: Qt.AlignTop
 				}
 
-				property var selectedLayerName
+				property var selectedLayer
 				property var selectedItem
 
 				Rectangle {
@@ -188,18 +188,18 @@ Window {
 							var ijObj = scene.xyToIj(mouseX, mouseY)
 							if(result.item) {
 								viewport.selectedItem = result.item
-								viewport.selectedLayerName = result.layerName
+								viewport.selectedLayer = result.layer
 
 								if(mouse.button == Qt.RightButton) {
-									scene.remove(viewport.selectedLayerName, viewport.selectedItem)
-									viewport.selectedLayerName = ""
+									scene.removeItem(viewport.selectedLayer, viewport.selectedItem)
+									viewport.selectedLayer = null
 									viewport.selectedItem = null
 								} else {
 //									viewport.selectedItem.type = boxTypeComboBox.boxType
-									scene.addItem("Layer1", ijObj.i, ijObj.j, boxTypeComboBox.boxType)
+									scene.addItem(scene.layerAt("Layer1"), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
 								}
 							} else {
-								scene.addItem("Layer0", ijObj.i, ijObj.j, boxTypeComboBox.boxType)
+								scene.addItem(scene.layerAt("Layer0"), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
 							}
 						}
 //						onPositionChanged: {

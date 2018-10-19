@@ -32,14 +32,12 @@ Item {
 		}
 	}
 
-	function remove(layerName, item) {
-		var layer = layerAt(layerName)
+	function removeItem(layer, item) {
 		if(layer)
-			layer.remove(item)
+			layer.removeItem(item)
 	}
 
-	function addItem(layerName, i, j, data) {
-		var layer = layerAt(layerName)
+	function addItem(layer, i, j, data) {
 		if(layer)
 			layer.addItem(i, j, data)
 	}
@@ -55,7 +53,7 @@ Item {
 
 	function hitTest(x, y) {
 		var result = {
-			"layerName": ""
+			"layer": null
 			, "item": null
 		}
 
@@ -63,7 +61,7 @@ Item {
 			var layer = children[i]
 			var item = layer.hitTest(x, y)
 			if(item) {
-				result.layerName = layer.name
+				result.layer = layer
 				result.item = item
 				break
 			}
