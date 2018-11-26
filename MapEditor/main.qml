@@ -2,6 +2,7 @@ import QtQuick 2.11
 import QtQuick.Window 2.11
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.3
 
 import "qrc:///Tools"
 import "qrc:///Scene"
@@ -26,63 +27,37 @@ Window {
 		}
 	}
 
-	QtObject {
+	FileDialog {
+		id: exportFileDialog
+		title: "Export file"
+		folder: shortcuts.home
+		selectExisting: false
+		selectMultiple: false
+		selectFolder: false
+		nameFilters: [ "Map files (*.map)" ]
+
+		onAccepted: {
+			mapProvider.exportTo(exportFileDialog.fileUrl)
+		}
+	}
+
+	FileDialog {
+		id: importFileDialog
+		title: "Import file"
+		folder: shortcuts.home
+		selectExisting: true
+		selectMultiple: false
+		selectFolder: false
+		nameFilters: [ "Map files (*.map)" ]
+
+		onAccepted: {
+			mapProvider.importFrom(importFileDialog.fileUrl)
+			scene.loadMap(mapProvider.map)
+		}
+	}
+
+	MapProvider {
 		id: mapProvider
-
-		property var map
-		function findLayers(map) {
-			var result = []
-			if(map !== null) {
-				for(var i = 0; i < map.length; ++i) {
-					result.push(map[i].name)
-				}
-			}
-			return result
-		}
-
-		property var layers: map && findLayers(map) || []
-
-		function generateMap(width, height) {
-			console.time("Server::generateMap")
-			console.log("Server::generateMap::width:", width)
-			console.log("Server::generateMap::height:", height)
-			var result = []
-			var layer = {
-				"name": "Layer0"
-				, "source": []
-			}
-			result.push(layer)
-
-			for(var i = 0; i < width; ++i) {
-				layer.source.push([])
-				for(var j = 0; j < height; ++j) {
-					var type = 0/*Math.round(Math.random() * (2))*/
-					layer.source[i].push(type)
-				}
-			}
-
-			layer = {
-				"name": "Layer1"
-				, "source": []
-			}
-			result.push(layer)
-
-			for(var ii = 0; ii < width; ++ii) {
-				layer.source.push([])
-				for(var jj = 0; jj < height; ++jj) {
-					type = -1/*Math.round(Math.random() * 1)*/
-//					if(type === 1) {
-//						type = 3
-//					} else {
-//						type = -1
-//					}
-
-					layer.source[ii].push(type)
-				}
-			}
-			console.timeEnd("Server::generateMap")
-			map = result
-		}
 	}
 
 	ColumnLayout {
@@ -99,21 +74,13 @@ Window {
 			Button {
 				text: "Export"
 				onClicked: {
-					var exportData = JSON.stringify(d.map)
-					consoleArea.text = exportData
+					exportFileDialog.open()
 				}
 			}
 			Button {
-				text: "Load"
+				text: "Import"
 				onClicked: {
-					var loadData = JSON.parse(consoleArea.text)
-					d.map = loadData
-				}
-			}
-			Button {
-				text: "Sync"
-				onClicked: {
-					d.map = d.map.concat()
+					importFileDialog.open()
 				}
 			}
 		}
@@ -161,7 +128,6 @@ Window {
 				id: viewport
 				Scene {
 					id: scene
-					Layout.alignment: Qt.AlignTop
 				}
 
 				property var selectedLayer

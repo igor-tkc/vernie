@@ -9,5 +9,6 @@
         <file>Libraries/ImageLibrary.qml</file>
         <file>App/App.js</file>
         <file>App/QmlApp.qml</file>
+        <file>Scene/MapProvider.qml</file>
     </qresource>
 </RCC>
