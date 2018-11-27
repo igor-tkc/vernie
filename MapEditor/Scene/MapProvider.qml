@@ -16,6 +16,16 @@ QtObject {
 		return result
 	}
 
+	function putData(layerName, i, j, data) {
+		for(var k = 0; k < map.length; ++k) {
+			var layerData = map[k]
+			if(layerData.name === layerName) {
+				layerData.source[i][j] = data
+				break
+			}
+		}
+	}
+
 	function exportTo(filePath) {
 		console.log("MapProvider::exportTo::filePath:", filePath)
 		var data = JSON.stringify(root.map)

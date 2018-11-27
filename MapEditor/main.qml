@@ -159,24 +159,15 @@ Window {
 						onPressed: {
 							var ijObj = scene.xyToIj(mouseX, mouseY)
 							if(mouse.button == Qt.RightButton) {
+								mapProvider.putData(layerComboBox.currentText, ijObj.i, ijObj.j, -1)
 								scene.removeItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j)
 								viewport.selectedLayer = null
 								viewport.selectedItem = null
 							} else {
-//								var result = scene.hitTest(mouseX, mouseY)
-//								if(result.item) {
-//									viewport.selectedItem = result.item
-//									viewport.selectedLayer = result.layer
-//								}
+								mapProvider.putData(layerComboBox.currentText, ijObj.i, ijObj.j, boxTypeComboBox.boxType)
 								scene.addItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
 							}
 						}
-//						onPositionChanged: {
-//							var item = scene.hitTest(mouseX, mouseY)
-//							if(item) {
-//								item.type = boxesGroup.checkedButton.dataValue
-//							}
-//						}
 					}
 				}
 			}
@@ -184,7 +175,6 @@ Window {
 //			SelectTool {
 //				id: selectTool
 //				scene: scene
-
 //			}
 		}
 	}
