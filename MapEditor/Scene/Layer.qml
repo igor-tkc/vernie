@@ -13,13 +13,6 @@ Item {
 
 		property var items: []
 
-		function itemAt(i, j) {
-			if(items && items.length && items.length > i
-					&& items[i] && items[i].length && items[i].length > j)
-				return items[i][j]
-			return null
-		}
-
 		function releaseItem(i, j) {
 			if(items && items.length && items.length > i
 					&& items[i] && items[i].length && items[i].length > j) {
@@ -59,17 +52,18 @@ Item {
 		}
 	}
 
+	function itemAt(i, j) {
+		if(d.items && d.items.length && d.items.length > i
+				&& d.items[i] && d.items[i].length && d.items[i].length > j)
+			return d.items[i][j]
+		return null
+	}
+
 	function hitTest(x, y) {
 		var i = Math.floor(x / root.itemWidth)
 		var j = Math.floor(y / root.itemHeight)
-		if(i < 0 || i >= d.items.length) {
-			return null
-		}
-		if(j < 0 || j >= d.items[0].length) {
-			return null
-		}
 
-		return d.items[i][j]
+		return itemAt(i, j)
 	}
 
 	function removeItem(i, j) {
@@ -113,7 +107,7 @@ Item {
 			result.push([])
 			for(var j = 0; j < source[i].length; ++j) {
 				var data = source[i][j]
-				item = d.itemAt(i, j)
+				item = itemAt(i, j)
 				if(item) {
 					d.releaseItem(i, j)
 					item.source = data

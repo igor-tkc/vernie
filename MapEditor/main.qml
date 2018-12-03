@@ -152,30 +152,31 @@ Window {
 						width: 1
 					}
 
-					MouseArea {
+					SelectTool {
+						id: selectTool
+						scene: scene
 						anchors.fill: parent
-						acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-						onPressed: {
-							var ijObj = scene.xyToIj(mouseX, mouseY)
-							if(mouse.button == Qt.RightButton) {
-								mapProvider.putData(layerComboBox.currentText, ijObj.i, ijObj.j, -1)
-								scene.removeItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j)
-								viewport.selectedLayer = null
-								viewport.selectedItem = null
-							} else {
-								mapProvider.putData(layerComboBox.currentText, ijObj.i, ijObj.j, boxTypeComboBox.boxType)
-								scene.addItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
-							}
-						}
 					}
+
+//					MouseArea {
+//						anchors.fill: parent
+//						acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+//						onPressed: {
+//							var ijObj = scene.xyToIj(mouseX, mouseY)
+//							if(mouse.button == Qt.RightButton) {
+//								mapProvider.putData(layerComboBox.currentText, ijObj.i, ijObj.j, -1)
+//								scene.removeItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j)
+//								viewport.selectedLayer = null
+//								viewport.selectedItem = null
+//							} else {
+//								mapProvider.putData(layerComboBox.currentText, ijObj.i, ijObj.j, boxTypeComboBox.boxType)
+//								scene.addItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
+//							}
+//						}
+//					}
 				}
 			}
-
-//			SelectTool {
-//				id: selectTool
-//				scene: scene
-//			}
 		}
 	}
 }

@@ -60,19 +60,16 @@ Item {
 		return null
 	}
 
-	function hitTest(x, y) {
-		var result = {
-			"layer": null
-			, "item": null
-		}
-
-		for(var i = root.children.length - 1; i >= 0; --i) {
-			var layer = children[i]
-			var item = layer.hitTest(x, y)
+	function itemsAt(i, j) {
+		var result = []
+		for(var li = root.children.length - 1; li >= 0; --li) {
+			var layer = children[li]
+			var item = layer.itemAt(i, j)
 			if(item) {
-				result.layer = layer
-				result.item = item
-				break
+				result.push({
+								"layer": layer
+								, "item": item
+							})
 			}
 		}
 		return result
