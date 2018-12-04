@@ -10,5 +10,6 @@
         <file>App/App.js</file>
         <file>App/QmlApp.qml</file>
         <file>Scene/MapProvider.qml</file>
+        <file>Tools/BuildTool.qml</file>
     </qresource>
 </RCC>

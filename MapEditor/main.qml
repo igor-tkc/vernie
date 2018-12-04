@@ -130,19 +130,6 @@ Window {
 					id: scene
 				}
 
-				property var selectedLayer
-				property var selectedItem
-
-				Rectangle {
-					x: viewport.selectedItem && viewport.selectedItem.x || 0
-					y: viewport.selectedItem && viewport.selectedItem.y || 0
-					width: viewport.selectedItem && viewport.selectedItem.width || 0
-					height: viewport.selectedItem && viewport.selectedItem.height || 0
-					color: "transparent"
-					border.color: "red"
-					border.width: 1
-				}
-
 				Rectangle {
 					width: 320
 					height: 320
@@ -152,29 +139,22 @@ Window {
 						width: 1
 					}
 
-					SelectTool {
-						id: selectTool
+//					SelectTool {
+//						id: selectTool
+//						scene: scene
+//						anchors.fill: parent
+//					}
+
+					BuildTool {
+						id: buildTool
 						scene: scene
+						mapProvider: mapProvider
+
+						layerName: layerComboBox.currentText
+						boxType: boxTypeComboBox.boxType
+
 						anchors.fill: parent
 					}
-
-//					MouseArea {
-//						anchors.fill: parent
-//						acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-//						onPressed: {
-//							var ijObj = scene.xyToIj(mouseX, mouseY)
-//							if(mouse.button == Qt.RightButton) {
-//								mapProvider.putData(layerComboBox.currentText, ijObj.i, ijObj.j, -1)
-//								scene.removeItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j)
-//								viewport.selectedLayer = null
-//								viewport.selectedItem = null
-//							} else {
-//								mapProvider.putData(layerComboBox.currentText, ijObj.i, ijObj.j, boxTypeComboBox.boxType)
-//								scene.addItem(scene.layerAt(layerComboBox.currentText), ijObj.i, ijObj.j, boxTypeComboBox.boxType)
-//							}
-//						}
-//					}
 				}
 			}
 		}

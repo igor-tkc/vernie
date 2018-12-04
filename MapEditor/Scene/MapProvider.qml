@@ -17,6 +17,9 @@ QtObject {
 	}
 
 	function putData(layerName, i, j, data) {
+		if(!map)
+			return
+
 		for(var k = 0; k < map.length; ++k) {
 			var layerData = map[k]
 			if(layerData.name === layerName) {
