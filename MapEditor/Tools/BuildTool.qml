@@ -13,14 +13,18 @@ Item {
 
 	function buildItem(x, y) {
 		var ijObj = scene.xyToIj(x, y)
-		mapProvider.putData(layerName, ijObj.i, ijObj.j, boxType)
-		scene.addItem(scene.layerAt(layerName), ijObj.i, ijObj.j, boxType)
+		if(mapProvider.isValid(ijObj.i, ijObj.j, layerName)) {
+			mapProvider.putData(layerName, ijObj.i, ijObj.j, boxType)
+			scene.addItem(scene.layerAt(layerName), ijObj.i, ijObj.j, boxType)
+		}
 	}
 
 	function removeItem(x, y) {
 		var ijObj = scene.xyToIj(x, y)
-		mapProvider.putData(layerName, ijObj.i, ijObj.j, -1)
-		scene.removeItem(scene.layerAt(layerName), ijObj.i, ijObj.j)
+		if(mapProvider.isValid(ijObj.i, ijObj.j, layerName)) {
+			mapProvider.putData(layerName, ijObj.i, ijObj.j, -1)
+			scene.removeItem(scene.layerAt(layerName), ijObj.i, ijObj.j)
+		}
 	}
 
 	MouseArea {

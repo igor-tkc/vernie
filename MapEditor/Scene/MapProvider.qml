@@ -16,6 +16,27 @@ QtObject {
 		return result
 	}
 
+	function layerByName(name) {
+		for(var k = 0; k < map.length; ++k) {
+			if(map[k].name === name) {
+				return map[k]
+			}
+		}
+		return null
+	}
+
+	function isValid(i, j, layerName) {
+		if(!map || !map.length || i < 0 || j < 0)
+			return false
+
+		var layer = layerByName(layerName)
+		if(i >= layer.source.length || !layer.source[i])
+			return false
+		if(j >= layer.source[i].length)
+			return false
+		return true
+	}
+
 	function putData(layerName, i, j, data) {
 		if(!map)
 			return
